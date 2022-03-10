@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+}
+
+#poem {
+  font-size: 20px;
+  font-style: normal;
+  font-family: cursive;
+}
+#mycanvas {
+  border: 1px solid black;
+}
