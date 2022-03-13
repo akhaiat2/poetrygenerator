@@ -1,12 +1,22 @@
 body {
   margin: 0;
+  padding: 70px;
+}
+
+#title {
+  position: relative;
+  margin: auto;
+  text-align: center;
+  font-size: 50px;
 }
 
 #poem {
+  position: relative;
   font-size: 20px;
   font-style: normal;
   font-family: cursive;
-}
-#mycanvas {
-  border: 1px solid black;
+  text-align: center;
+  padding: 40px 0;
+  margin: auto;
+  width: 50%;
 }
