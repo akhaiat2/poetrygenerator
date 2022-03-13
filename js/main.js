@@ -1,21 +1,79 @@
   const poemDiv = document.querySelector('#poem');
+  const poemTitle = document.querySelector('#title');
+  const imageCollection = document.querySelector('#imageCollection');
+
+  function randomBackgroundColor () {
+    const r = Math.random()*255;
+    const g = Math.random()*255
+    const b = Math.random()*255;
+    document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+  }
 
   function createRandomPoem (poemText, i) {
-    const text = new Text();
     const sentence = poemText.split('\n');
-    console.log(sentence);
-    // const poemSelectorNumber = Math.floor(Math.random()*5);
-    for (let i = 0; i <= sentence.length; i++) {
-      let poemContent = document.createTextNode(sentence);
-      poemDiv.appendChild(poemContent);
-    }
+    let poemContent = document.createElement('div');
+    // console.log(i);
+    poemContent.innerHTML += `${sentence[i]} \n`;
+    poemContent.innerHTML += ` ${sentence[i+1]}`;
+    poemContent.style.display = 'block';
+    poemDiv.appendChild(poemContent);
   }
+
+  function createRandomTitle (title, i) {
+    const separateWords = title.split(' ');
+    let titleContent = document.createElement('div');
+    if (i == 0) {
+      titleContent.innerHTML += `${separateWords[0]} `;
+    }
+    else {
+      if (separateWords[0] == 'The') {
+        titleContent.innerHTML += ` ${separateWords[1]} `;
+      }
+      else {
+        titleContent.innerHTML += ` ${separateWords[0]} `;
+      }
+    }
+    poemTitle.appendChild(titleContent);
+  }
+
+  function drawImage (url, i) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const x = Math.cos(i * 0.5) * 400 + (w / 2);
+    const y = Math.sin(i * 0.5) * 400 + (h / 2);
+    const img = document.createElement('img');
+    img.style.borderRadius = '50%';
+    img.style.width = '100px';
+    img.style.height = '100px';
+    img.style.position = 'absolute';
+    img.style.top = `${y - 50}px`;
+  	img.style.left = `${x - 50}px`;
+    img.src = url;
+    imageCollection.appendChild(img);
+  }
+
+  fetch(`https://api.pexels.com/v1/search?query=people`,{
+      headers: {
+        Authorization: "563492ad6f917000010000016031626409644f6bbaab6a914e7b0433"
+      }
+    })
+   .then(resp => {
+     return resp.json()
+    })
+   .then(data => {
+     for (let i = 0; i < data.photos.length; i++) {
+       // console.log(data.photos[i].src.original);
+       drawImage(data.photos[i].src.original, i);
+     }
+    })
 
 	async function getPoem () {
     const res = await window.fetch('https://www.poemist.com/api/v1/randompoems');
     const data = await res.json();
+    // console.log(data);
+    data.forEach((o,i) => createRandomTitle(o.title, i));
     data.forEach((o, i) => createRandomPoem(o.content, i));
   }
 
-//Google Image API surrounding poem? Tone.js for music
   getPoem();
+  randomBackgroundColor();
