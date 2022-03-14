@@ -1,13 +1,7 @@
   const poemDiv = document.querySelector('#poem');
   const poemTitle = document.querySelector('#title');
   const imageCollection = document.querySelector('#imageCollection');
-
-  function randomBackgroundColor () {
-    const r = Math.random()*255;
-    const g = Math.random()*255
-    const b = Math.random()*255;
-    document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
-  }
+  const pexelSearch = "poem";
 
   function createRandomPoem (poemText, i) {
     const sentence = poemText.split('\n');
@@ -15,6 +9,7 @@
     // console.log(i);
     poemContent.innerHTML += `${sentence[i]} \n`;
     poemContent.innerHTML += ` ${sentence[i+1]}`;
+    poemContent.innerHTML += ` ${sentence[i+2]}`;
     poemContent.style.display = 'block';
     poemDiv.appendChild(poemContent);
   }
@@ -25,6 +20,10 @@
     if (i == 0) {
       titleContent.innerHTML += `${separateWords[0]} `;
     }
+    if (i == 1) {
+      console.log(`${separateWords[0]}`);
+      word = `${separateWords[0]}`;
+    }
     else {
       if (separateWords[0] == 'The') {
         titleContent.innerHTML += ` ${separateWords[1]} `;
@@ -33,6 +32,7 @@
         titleContent.innerHTML += ` ${separateWords[0]} `;
       }
     }
+    console.log(poemTitle);
     poemTitle.appendChild(titleContent);
   }
 
@@ -46,13 +46,13 @@
     img.style.width = '100px';
     img.style.height = '100px';
     img.style.position = 'absolute';
-    img.style.top = `${y - 50}px`;
-  	img.style.left = `${x - 50}px`;
+    img.style.top = `${y - 30}px`;
+  	img.style.left = `${x - 30}px`;
     img.src = url;
     imageCollection.appendChild(img);
   }
 
-  fetch(`https://api.pexels.com/v1/search?query=people`,{
+  fetch(`https://api.pexels.com/v1/search?query=${pexelSearch}`,{
       headers: {
         Authorization: "563492ad6f917000010000016031626409644f6bbaab6a914e7b0433"
       }
@@ -76,4 +76,3 @@
   }
 
   getPoem();
-  randomBackgroundColor();

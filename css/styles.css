@@ -1,6 +1,10 @@
 body {
   margin: 0;
   padding: 70px;
+  animation-name: backgroundColorPalette;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #title {
@@ -10,6 +14,23 @@ body {
   font-size: 50px;
 }
 
+@keyframes backgroundColorPalette {
+  0% {
+    background: #ee6055;
+  }
+  25% {
+    background: #60d394;
+  }
+  50% {
+    background: #aaf683;
+  }
+  75% {
+    background: #ffd97d;
+  }
+  100% {
+    background: #ff9b85;
+  }
+}
 #poem {
   position: relative;
   font-size: 20px;
