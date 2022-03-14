@@ -48,6 +48,10 @@
     imageCollection.appendChild(img);
   }
 
+  setTimeout(function(){
+   window.location.reload(1);
+  }, 30000);
+
   async function getImages() {
     if (pexelSearch != "poem") {
       fetch(`https://api.pexels.com/v1/search?query=${pexelSearch}`,{
