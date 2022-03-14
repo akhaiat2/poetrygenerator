@@ -1,12 +1,12 @@
   const poemDiv = document.querySelector('#poem');
   const poemTitle = document.querySelector('#title');
   const imageCollection = document.querySelector('#imageCollection');
-  const pexelSearch = "poem";
+  let pexelSearch = "potato";
+  let audio = document.querySelector('audio');
 
   function createRandomPoem (poemText, i) {
     const sentence = poemText.split('\n');
     let poemContent = document.createElement('div');
-    // console.log(i);
     poemContent.innerHTML += `${sentence[i]} \n`;
     poemContent.innerHTML += ` ${sentence[i+1]}`;
     poemContent.innerHTML += ` ${sentence[i+2]}`;
@@ -17,12 +17,9 @@
   function createRandomTitle (title, i) {
     const separateWords = title.split(' ');
     let titleContent = document.createElement('div');
+
     if (i == 0) {
       titleContent.innerHTML += `${separateWords[0]} `;
-    }
-    if (i == 1) {
-      console.log(`${separateWords[0]}`);
-      word = `${separateWords[0]}`;
     }
     else {
       if (separateWords[0] == 'The') {
@@ -32,7 +29,6 @@
         titleContent.innerHTML += ` ${separateWords[0]} `;
       }
     }
-    console.log(poemTitle);
     poemTitle.appendChild(titleContent);
   }
 
@@ -46,26 +42,30 @@
     img.style.width = '100px';
     img.style.height = '100px';
     img.style.position = 'absolute';
-    img.style.top = `${y - 30}px`;
+    img.style.top = `${y - 10}px`;
   	img.style.left = `${x - 30}px`;
     img.src = url;
     imageCollection.appendChild(img);
   }
 
-  fetch(`https://api.pexels.com/v1/search?query=${pexelSearch}`,{
-      headers: {
-        Authorization: "563492ad6f917000010000016031626409644f6bbaab6a914e7b0433"
-      }
-    })
-   .then(resp => {
-     return resp.json()
-    })
-   .then(data => {
-     for (let i = 0; i < data.photos.length; i++) {
-       // console.log(data.photos[i].src.original);
-       drawImage(data.photos[i].src.original, i);
-     }
-    })
+  async function getImages() {
+    if (pexelSearch != "poem") {
+      fetch(`https://api.pexels.com/v1/search?query=${pexelSearch}`,{
+          headers: {
+            Authorization: "563492ad6f917000010000016031626409644f6bbaab6a914e7b0433"
+          }
+        })
+       .then(resp => {
+         return resp.json()
+        })
+       .then(data => {
+         for (let i = 0; i < data.photos.length; i++) {
+           // console.log(data.photos[i].src.original);
+           drawImage(data.photos[i].src.original, i);
+         }
+        })
+    }
+  }
 
 	async function getPoem () {
     const res = await window.fetch('https://www.poemist.com/api/v1/randompoems');
@@ -74,5 +74,5 @@
     data.forEach((o,i) => createRandomTitle(o.title, i));
     data.forEach((o, i) => createRandomPoem(o.content, i));
   }
-
   getPoem();
+  getImages();
