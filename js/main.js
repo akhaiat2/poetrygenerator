@@ -21,7 +21,13 @@
       if (separateWords.length = 1) {
         titleContent.innerHTML += `${separateWords[0]} `;
         console.log(separateWords[0]);
-        pexelSearch = `${separateWords[0]}`;
+        if (separateWords[0] == 'The')
+        {
+          pexelSearch = `${separateWords[1]}`;
+        }
+        else {
+          pexelSearch = `${separateWords[0]}`;
+        }
       }
       else {
         titleContent.innerHTML += `${separateWords[1]} `;
