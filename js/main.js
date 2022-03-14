@@ -1,8 +1,7 @@
   const poemDiv = document.querySelector('#poem');
   const poemTitle = document.querySelector('#title');
   const imageCollection = document.querySelector('#imageCollection');
-  let pexelSearch = "potato";
-  let audio = document.querySelector('audio');
+  let pexelSearch = "poem";
 
   function createRandomPoem (poemText, i) {
     const sentence = poemText.split('\n');
@@ -19,7 +18,16 @@
     let titleContent = document.createElement('div');
 
     if (i == 0) {
-      titleContent.innerHTML += `${separateWords[0]} `;
+      if (separateWords.length = 1) {
+        titleContent.innerHTML += `${separateWords[0]} `;
+        console.log(separateWords[0]);
+        pexelSearch = `${separateWords[0]}`;
+      }
+      else {
+        titleContent.innerHTML += `${separateWords[1]} `;
+        console.log(separateWords[1]);
+        pexelSearch = `${separateWords[1]}`;
+      }
     }
     else {
       if (separateWords[0] == 'The') {
@@ -30,6 +38,7 @@
       }
     }
     poemTitle.appendChild(titleContent);
+    getImages();
   }
 
   function drawImage (url, i) {
@@ -50,7 +59,7 @@
 
   setTimeout(function(){
    window.location.reload(1);
-  }, 30000);
+ }, 60000);
 
   async function getImages() {
     if (pexelSearch != "poem") {
@@ -79,4 +88,3 @@
     data.forEach((o, i) => createRandomPoem(o.content, i));
   }
   getPoem();
-  getImages();
