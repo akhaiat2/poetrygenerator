@@ -32,17 +32,6 @@ body {
   }
 }
 
-audio::-webkit-media-controls-panel {
-  background-color: grey;
-}
-
-audio::-webkit-media-controls-volume-slider {
-  background-color: #B1D4E0;
-  border-radius: 25px;
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
 #poem {
   position: relative;
   font-size: 20px;

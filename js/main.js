@@ -83,7 +83,6 @@
 	async function getPoem () {
     const res = await window.fetch('https://www.poemist.com/api/v1/randompoems');
     const data = await res.json();
-    // console.log(data);
     data.forEach((o,i) => createRandomTitle(o.title, i));
     data.forEach((o, i) => createRandomPoem(o.content, i));
   }
